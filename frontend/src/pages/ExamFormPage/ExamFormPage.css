@@ -1,0 +1,84 @@
+.exam-form-page {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.exam-form-page__header {
+  margin-bottom: 18px;
+}
+
+.exam-form-page__header h1 {
+  font-size: 26px;
+}
+
+.exam-form-page__header p {
+  margin: 6px 0 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.exam-form-page .error-message {
+  margin-bottom: 16px;
+}
+
+.exam-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+}
+
+.exam-form__summary {
+  padding: 10px 14px;
+  border: 1px solid var(--color-danger-border);
+  border-radius: 8px;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  font-size: 14px;
+}
+
+.exam-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exam-form__field label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.exam-form__field input,
+.exam-form__field textarea {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.exam-form__field input:focus,
+.exam-form__field textarea:focus {
+  outline: 2px solid #c7caff;
+  border-color: var(--color-primary);
+}
+
+.exam-form__field--invalid input,
+.exam-form__field--invalid textarea {
+  border-color: var(--color-danger);
+  background: #fffbfa;
+}
+
+.exam-form__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.exam-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

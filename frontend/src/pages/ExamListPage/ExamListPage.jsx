@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
 import ExamTable from '../../components/ExamTable/ExamTable.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
@@ -21,7 +21,9 @@ function ExamListPage() {
 
   const { data, isLoading, error, reload } = useExams({ page, search });
   const [deletingId, setDeletingId] = useState(null);
-  const [notice, setNotice] = useState(null);
+  // A notice can arrive from the create form through the router state.
+  const location = useLocation();
+  const [notice, setNotice] = useState(location.state?.notice ?? null);
 
   const handleDelete = async (exam) => {
     setDeletingId(exam.id);
