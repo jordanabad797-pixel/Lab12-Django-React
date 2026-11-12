@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'drf_spectacular',
@@ -63,6 +64,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # CORS must run right after the security middleware and before
+    # CommonMiddleware so preflight (OPTIONS) requests get their headers.
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -147,6 +151,22 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
+
+# CORS (django-cors-headers)
+# Only the exact origins of the React client are authorized. There is no
+# wildcard (CORS_ALLOW_ALL_ORIGINS stays False) and each environment declares
+# its own list through DJANGO_CORS_ALLOWED_ORIGINS.
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = env_list(
+    'DJANGO_CORS_ALLOWED_ORIGINS',
+    'http://localhost:5173,http://127.0.0.1:5173',
+)
+# Only the API is exposed to other origins; admin and docs stay same-origin.
+CORS_URLS_REGEX = r'^/api/.*$'
+# The client authenticates with a Token header, not with cookies.
+CORS_ALLOW_CREDENTIALS = False
+# Browsers may cache a preflight answer for one hour.
+CORS_PREFLIGHT_MAX_AGE = 3600
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
