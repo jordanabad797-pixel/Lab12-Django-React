@@ -1,0 +1,15 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.pagination__buttons {
+  display: flex;
+  gap: 8px;
+}
