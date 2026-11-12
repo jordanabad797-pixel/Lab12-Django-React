@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Centro de API de Cuestionarios - Documentación Swagger</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css" />
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow-y: scroll;
+        }
+        body {
+            margin: 0;
+            background: #0f172a;
+            color: #ffffff;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .swagger-ui {
+            color: #ffffff !important;
+        }
+        .swagger-ui .info {
+            background: #1e293b;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            margin: 2.5rem auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+        }
+        .swagger-ui .info .title {
+            color: #ffffff !important;
+            font-weight: 800;
+        }
+        .swagger-ui .info p, 
+        .swagger-ui .info table, 
+        .swagger-ui .info li, 
+        .swagger-ui .info small,
+        .swagger-ui .info span,
+        .swagger-ui .info a {
+            color: #f1f5f9 !important;
+        }
+        .swagger-ui .scheme-container {
+            background: #1e293b !important;
+            box-shadow: none !important;
+            border-radius: 1rem;
+            border: 1px solid #334155;
+            padding: 1rem;
+            margin: 2rem auto;
+        }
+        .swagger-ui .opblock-tag {
+            color: #ffffff !important;
+            border-bottom: 2px solid #334155;
+            font-size: 1.35rem;
+            font-weight: 700;
+            padding: 12px 0;
+        }
+        .swagger-ui .opblock {
+            border-radius: 0.75rem !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            margin-bottom: 1.25rem;
+            border: 1px solid #475569 !important;
+        }
+        .swagger-ui .opblock.opblock-get { background: rgba(59, 130, 246, 0.15); border-color: rgba(59, 130, 246, 0.4) !important; }
+        .swagger-ui .opblock.opblock-post { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4) !important; }
+        .swagger-ui .opblock.opblock-put { background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4) !important; }
+        .swagger-ui .opblock.opblock-delete { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4) !important; }
+        
+        .swagger-ui .opblock .opblock-summary-path,
+        .swagger-ui .opblock .opblock-summary-operation-id,
+        .swagger-ui .opblock .opblock-summary-description {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+        .swagger-ui .opblock-description-wrapper p, 
+        .swagger-ui .opblock-title_normal p,
+        .swagger-ui table.full td, 
+        .swagger-ui table.full th {
+            color: #f8fafc !important;
+        }
+        .swagger-ui .tab li {
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+        .swagger-ui select {
+            background: #1e293b;
+            color: white;
+            border: 1px solid #64748b;
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+        .swagger-ui input[type=text] {
+            background: #1e293b;
+            color: white;
+            border: 1px solid #64748b;
+            border-radius: 6px;
+            padding: 6px 10px;
+        }
+        .swagger-ui textarea {
+            background: #1e293b !important;
+            color: white !important;
+            border: 1px solid #64748b !important;
+        }
+        .swagger-ui .btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .swagger-ui .authorize.btn {
+            border-color: #10b981;
+            color: #10b981;
+            background: #064e3b;
+        }
+        .swagger-ui .authorize.btn svg {
+            fill: #10b981;
+        }
+        .swagger-ui .model {
+            color: #e2e8f0 !important;
+        }
+        .swagger-ui .prop-type {
+            color: #38bdf8 !important;
+            font-weight: 600;
+        }
+        .swagger-ui .parameter__name,
+        .swagger-ui .parameter__type,
+        .swagger-ui .parameter__in {
+            color: #f8fafc !important;
+            font-weight: 600;
+        }
+        
+        /* Botón Volver al Inicio flotante */
+        .back-home {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.6);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+        .back-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.8);
+        }
+    </style>
+</head>
+<body>
+<div id="swagger-ui"></div>
+
+<a href="/" class="back-home">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Volver al Inicio
+</a>
+
+<script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js" charset="UTF-8"> </script>
+<script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+<script>
+window.onload = function() {
+  const ui = SwaggerUIBundle({
+    url: "{% url 'schema' %}",
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "BaseLayout"
+  });
+  window.ui = ui;
+};
+</script>
+</body>
+</html>

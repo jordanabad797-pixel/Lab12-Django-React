@@ -1,0 +1,19 @@
+# Python / Django
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
+agent_audit.jsonl
+backend/.env
+
+# Node / React
+node_modules/
+dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
