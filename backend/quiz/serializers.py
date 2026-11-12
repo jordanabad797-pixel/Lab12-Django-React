@@ -52,8 +52,34 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class ExamSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
+    question_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Exam
-        fields = ['id', 'title', 'description', 'created_at', 'questions']
+        fields = ['id', 'title', 'description', 'created_at', 'question_count', 'questions']
         read_only_fields = ['created_at']
+        extra_kwargs = {
+            'title': {
+                'error_messages': {
+                    'required': 'El título es obligatorio.',
+                    'blank': 'El título es obligatorio.',
+                },
+            },
+        }
+
+    def get_question_count(self, exam):
+        # Uses the annotated value when the viewset provides it (one query),
+        # and falls back to counting for single instances.
+        annotated = getattr(exam, 'question_total', None)
+        return annotated if annotated is not None else exam.questions.count()
+
+    def validate_title(self, value):
+        title = value.strip()
+        if len(title) < 5:
+            raise serializers.ValidationError('El título debe tener al menos 5 caracteres.')
+        duplicates = Exam.objects.filter(title__iexact=title)
+        if self.instance is not None:
+            duplicates = duplicates.exclude(pk=self.instance.pk)
+        if duplicates.exists():
+            raise serializers.ValidationError('Ya existe un examen con ese título.')
+        return title
