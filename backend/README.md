@@ -1,3 +1,5 @@
+> **Nota (Lab 12):** este documento describe la API tal como se entregó en el Lab 08. Las instrucciones para levantar backend y frontend juntos, la configuración de CORS y las variables de entorno están en el [README principal](../README.md). Desde el Lab 12 la clave secreta se lee de `backend/.env` (ver `.env.example`).
+
 # Lab08: API Headless — Contrato, Cliente de Consola y Frontera del Agente
 
 Este repositorio contiene el desarrollo del proyecto Lab 08 de Desarrollo de Aplicaciones Empresariales (DAE), enfocado en la construcción y exposición de una API de cuestionarios (*Headless API*) mediante Django REST Framework, la implementación de un contrato OpenAPI, un cliente de consola robusto (`quizctl.py`), control de permisos granulares en el servidor (separando identidades de humanos y agentes de IA), y una pasarela de ejecución segura con auditoría de intenciones.
