@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
 import ExamTable from '../../components/ExamTable/ExamTable.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
@@ -24,6 +24,15 @@ function ExamListPage() {
   // A notice can arrive from the create form through the router state.
   const location = useLocation();
   const [notice, setNotice] = useState(location.state?.notice ?? null);
+  const navigate = useNavigate();
+
+  // Consume the router state once: otherwise the browser keeps it in the
+  // history entry and the notice reappears after a manual reload.
+  useEffect(() => {
+    if (location.state?.notice) {
+      navigate(`${location.pathname}${location.search}`, { replace: true, state: null });
+    }
+  }, [location, navigate]);
 
   const handleDelete = async (exam) => {
     setDeletingId(exam.id);
