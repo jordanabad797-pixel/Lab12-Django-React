@@ -1,6 +1,7 @@
-django
-djangorestframework
-drf-spectacular
-pyyaml
-django-filter
-requests
+Django>=5.2,<7
+djangorestframework>=3.16
+drf-spectacular>=0.28
+django-filter>=25.1
+PyYAML>=6.0
+requests>=2.32
+python-dotenv>=1.1
