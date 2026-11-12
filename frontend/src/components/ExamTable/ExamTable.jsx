@@ -1,3 +1,4 @@
+import DeleteButton from '../DeleteButton/DeleteButton.jsx';
 import './ExamTable.css';
 
 const dateFormatter = new Intl.DateTimeFormat('es-PE', {
@@ -6,7 +7,7 @@ const dateFormatter = new Intl.DateTimeFormat('es-PE', {
 });
 
 /** Data state: renders the exams returned by the API. */
-function ExamTable({ exams, isRefreshing = false }) {
+function ExamTable({ exams, onDelete, deletingId = null, isRefreshing = false }) {
   return (
     <div className={`exam-table card${isRefreshing ? ' exam-table--refreshing' : ''}`}>
       <table>
@@ -17,6 +18,9 @@ function ExamTable({ exams, isRefreshing = false }) {
             <th scope="col">Descripción</th>
             <th scope="col">Preguntas</th>
             <th scope="col">Creado</th>
+            <th scope="col" className="exam-table__actions">
+              Acciones
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +33,14 @@ function ExamTable({ exams, isRefreshing = false }) {
                 <span className="exam-table__badge">{exam.question_count}</span>
               </td>
               <td className="exam-table__date">{dateFormatter.format(new Date(exam.created_at))}</td>
+              <td className="exam-table__actions">
+                <DeleteButton
+                  label={exam.title}
+                  onConfirm={() => onDelete(exam)}
+                  isDeleting={deletingId === exam.id}
+                  disabled={deletingId !== null}
+                />
+              </td>
             </tr>
           ))}
         </tbody>

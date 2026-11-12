@@ -4,6 +4,8 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
 import ExamTable from '../../components/ExamTable/ExamTable.jsx';
 import Pagination from '../../components/Pagination/Pagination.jsx';
 import TableSkeleton from '../../components/TableSkeleton/TableSkeleton.jsx';
+import { parseApiError } from '../../api/errors.js';
+import { deleteExam } from '../../api/exams.js';
 import { useExams } from '../../hooks/useExams.js';
 import './ExamListPage.css';
 
@@ -18,6 +20,29 @@ function ExamListPage() {
   const [searchInput, setSearchInput] = useState(search);
 
   const { data, isLoading, error, reload } = useExams({ page, search });
+  const [deletingId, setDeletingId] = useState(null);
+  const [notice, setNotice] = useState(null);
+
+  const handleDelete = async (exam) => {
+    setDeletingId(exam.id);
+    setNotice(null);
+    try {
+      await deleteExam(exam.id);
+      setNotice({ type: 'success', text: `Se eliminó el examen “${exam.title}”.` });
+      // If the last row of a page was removed, DRF would answer 404 for that
+      // page, so move one page back; otherwise refresh the current one.
+      if (data.results.length === 1 && page > 1) {
+        goToPage(page - 1);
+      } else {
+        reload();
+      }
+    } catch (err) {
+      const parsed = parseApiError(err);
+      setNotice({ type: 'error', text: `${parsed.title}: ${parsed.message}` });
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   const goToPage = (nextPage) => {
     const params = {};
@@ -42,6 +67,18 @@ function ExamListPage() {
           + Nuevo examen
         </Link>
       </header>
+
+      {notice && (
+        <div
+          className={`exam-list-page__flash${notice.type === 'error' ? ' exam-list-page__flash--error' : ''}`}
+          role="status"
+        >
+          <span>{notice.text}</span>
+          <button type="button" onClick={() => setNotice(null)} aria-label="Cerrar aviso">
+            ×
+          </button>
+        </div>
+      )}
 
       <form className="exam-list-page__search" onSubmit={handleSearch} role="search">
         <input
@@ -86,7 +123,12 @@ function ExamListPage() {
     }
     return (
       <>
-        <ExamTable exams={data.results} isRefreshing={isLoading} />
+        <ExamTable
+          exams={data.results}
+          onDelete={handleDelete}
+          deletingId={deletingId}
+          isRefreshing={isLoading}
+        />
         <Pagination
           page={page}
           count={data.count}
