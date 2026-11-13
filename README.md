@@ -3,7 +3,7 @@
 [![CI](https://github.com/jordanabad797-pixel/Lab12-Django-React/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jordanabad797-pixel/Lab12-Django-React/actions/workflows/ci.yml)
 
 **Curso:** Desarrollo de Aplicaciones Empresariales (4-C24-A) · **Semana:** 12 · **Docente:** Michael Montgomery Rosell
-**Alumno:** Alonso Abad Mejia
+**Alumno:** Alonso Abad Mejia y Farid Chávez Campos
 
 Este repositorio contiene **los dos lados** del laboratorio:
 
