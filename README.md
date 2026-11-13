@@ -1,5 +1,7 @@
 # Lab 12 — Ajax y Servicios Web: React + Axios consumiendo la API de Django
 
+[![CI](https://github.com/jordanabad797-pixel/Lab12-Django-React/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jordanabad797-pixel/Lab12-Django-React/actions/workflows/ci.yml)
+
 **Curso:** Desarrollo de Aplicaciones Empresariales (4-C24-A) · **Semana:** 12 · **Docente:** Michael Montgomery Rosell
 **Alumno:** Alonso Abad Mejia
 
@@ -46,7 +48,7 @@ flowchart LR
 
 ## 3. Cómo levantar los dos lados
 
-Requisitos: Python 3.12+, Node.js 20+, Git.
+Requisitos: Python 3.12+, Node.js 22.12+ (lo exigen Vitest 5 y jsdom 31), Git.
 
 ### 3.1 Backend — terminal 1
 
@@ -120,8 +122,11 @@ Las capturas de todos los casos están en [`docs/evidencias/`](docs/evidencias).
 
 ```powershell
 cd backend;  python manage.py test         # 20 pruebas (CORS, validación, permisos, cliente de consola, agente)
-cd frontend; npm test                      # 15 pruebas (parseApiError, estados del listado, borrado, formulario)
+cd frontend; npm run lint                  # ESLint (configuración plana: react-hooks y react-refresh)
+cd frontend; npm test                      # 28 pruebas (parseApiError, estados del listado, borrado, formulario, Pagination, DeleteButton, ErrorMessage)
 ```
+
+Las mismas comprobaciones se ejecutan en GitHub Actions ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) en cada `push` y `pull_request` a `main`: el job **backend** (Python 3.12) corre `python manage.py test` y el job **frontend** (Node 22) corre `npm ci`, `npm run lint`, `npm test` y `npm run build`.
 
 ## 8. Normas aplicadas
 
@@ -132,3 +137,10 @@ cd frontend; npm test                      # 15 pruebas (parseApiError, estados 
 ## 9. Historial de commits
 
 Cada paso del procedimiento está en su propio commit (ver `git log --oneline`): importación del Lab 08 → variables de entorno → CORS → validación del serializador → proyecto React → módulo cliente Axios → listado con tres estados → borrado → formulario de alta → pruebas → corrección → documentación y evidencias.
+
+## 10. Equipo y aportes
+
+| Integrante | Aportes |
+|---|---|
+| **Alonso Abad Mejia** | Implementación del laboratorio: backend con CORS, cliente React, páginas, pruebas y evidencias. |
+| **Farid Chávez Campos** | ESLint en el frontend (incluida la corrección del aviso `react-hooks/set-state-in-effect` en `useExams.js`), pruebas de `Pagination`, `DeleteButton` y `ErrorMessage`, e integración continua con GitHub Actions. |
